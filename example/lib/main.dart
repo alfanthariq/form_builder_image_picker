@@ -49,8 +49,8 @@ class MyHomePage extends StatelessWidget {
                 children: <Widget>[
                   FormBuilderImagePicker(
                     name: 'photos',
-                    displayCustomType:
-                        (obj) => obj is ApiImage ? obj.imageUrl : obj,
+                    displayCustomType: (obj) =>
+                        obj is ApiImage ? obj.imageUrl : obj,
                     decoration: const InputDecoration(labelText: 'Pick Photos'),
                     maxImages: 5,
                     previewAutoSizeWidth: true,
@@ -69,8 +69,8 @@ class MyHomePage extends StatelessWidget {
                   const SizedBox(height: 15),
                   FormBuilderImagePicker(
                     name: 'singlePhotoWithDecoration',
-                    displayCustomType:
-                        (obj) => obj is ApiImage ? obj.imageUrl : obj,
+                    displayCustomType: (obj) =>
+                        obj is ApiImage ? obj.imageUrl : obj,
                     decoration: const InputDecoration(
                       labelText: 'Pick Single Photo With Decoration Visible',
                     ),
@@ -87,8 +87,8 @@ class MyHomePage extends StatelessWidget {
                   ),
                   FormBuilderImagePicker(
                     name: 'singlePhoto',
-                    displayCustomType:
-                        (obj) => obj is ApiImage ? obj.imageUrl : obj,
+                    displayCustomType: (obj) =>
+                        obj is ApiImage ? obj.imageUrl : obj,
                     // decoration: const InputDecoration(
                     //   labelText: 'Pick Photos',
                     // ),
@@ -105,15 +105,14 @@ class MyHomePage extends StatelessWidget {
                   ),
                   FormBuilderImagePicker(
                     name: 'singleAvatarPhoto',
-                    displayCustomType:
-                        (obj) => obj is ApiImage ? obj.imageUrl : obj,
+                    displayCustomType: (obj) =>
+                        obj is ApiImage ? obj.imageUrl : obj,
                     decoration: const InputDecoration(labelText: 'Pick Photos'),
-                    transformImageWidget:
-                        (context, displayImage) => Card(
-                          shape: const CircleBorder(),
-                          clipBehavior: Clip.antiAlias,
-                          child: SizedBox.expand(child: displayImage),
-                        ),
+                    transformImageWidget: (context, displayImage) => Card(
+                      shape: const CircleBorder(),
+                      clipBehavior: Clip.antiAlias,
+                      child: SizedBox.expand(child: displayImage),
+                    ),
                     showDecoration: false,
                     maxImages: 1,
                     previewAutoSizeWidth: false,
@@ -152,54 +151,37 @@ class MyHomePage extends StatelessWidget {
                       labelText: 'Pick Photos (with custom view)',
                     ),
                     name: 'CupertinoActionSheet',
-                    optionsBuilder:
-                        (cameraPicker, galleryPicker) => CupertinoActionSheet(
-                          title: const Text('Image'),
-                          message: const Text(
-                            'Pick an image from given options',
-                          ),
-                          actions: [
-                            CupertinoActionSheetAction(
-                              isDefaultAction: true,
-                              onPressed: () {
-                                cameraPicker();
-                              },
-                              child: const Text('Camera'),
-                            ),
-                            CupertinoActionSheetAction(
-                              isDefaultAction: true,
-                              onPressed: () {
-                                galleryPicker();
-                              },
-                              child: const Text('Gallery'),
-                            ),
-                          ],
+                    optionsBuilder: (cameraPicker, galleryPicker) =>
+                        CupertinoActionSheet(
+                      title: const Text('Image'),
+                      message: const Text(
+                        'Pick an image from given options',
+                      ),
+                      actions: [
+                        CupertinoActionSheetAction(
+                          isDefaultAction: true,
+                          onPressed: () {
+                            cameraPicker();
+                          },
+                          child: const Text('Camera'),
                         ),
-                    onTap:
-                        (child) => showCupertinoModalPopup(
-                          context: context,
-                          builder: (context) => child,
+                        CupertinoActionSheetAction(
+                          isDefaultAction: true,
+                          onPressed: () {
+                            galleryPicker();
+                          },
+                          child: const Text('Gallery'),
                         ),
+                      ],
+                    ),
+                    onTap: (child) => showCupertinoModalPopup(
+                      context: context,
+                      builder: (context) => child,
+                    ),
                   ),
                   FormBuilderImagePicker(
                     name: 'customPreview',
                     maxImages: null,
-                    previewBuilder:
-                        (context, images, addButton) => ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            minHeight: 130,
-                            maxHeight: 500,
-                          ),
-                          child: GridView.extent(
-                            maxCrossAxisExtent: 130,
-                            mainAxisSpacing: 4,
-                            crossAxisSpacing: 4,
-                            children: [
-                              ...images,
-                              if (addButton != null) addButton,
-                            ],
-                          ),
-                        ),
                   ),
                   ElevatedButton(
                     child: const Text('Submit'),

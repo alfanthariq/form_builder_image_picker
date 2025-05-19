@@ -40,13 +40,11 @@ class ImageSourceBottomSheet extends StatefulWidget {
   final bool preventPop;
 
   final Widget Function(
-    FutureVoidCallBack cameraPicker,
-    FutureVoidCallBack galleryPicker,
-  )?
-  optionsBuilder;
+          FutureVoidCallBack cameraPicker, FutureVoidCallBack galleryPicker)?
+      optionsBuilder;
 
   const ImageSourceBottomSheet({
-    super.key,
+    Key? key,
     this.remainingImages,
     this.preventPop = false,
     this.maxHeight,
@@ -61,7 +59,7 @@ class ImageSourceBottomSheet extends StatefulWidget {
     this.bottomSheetPadding,
     this.optionsBuilder,
     required this.availableImageSources,
-  });
+  }) : super(key: key);
 
   @override
   ImageSourceBottomSheetState createState() => ImageSourceBottomSheetState();
@@ -132,7 +130,10 @@ class ImageSourceBottomSheetState extends State<ImageSourceBottomSheet> {
       ),
     );
     if (widget.preventPop) {
-      res = PopScope(canPop: !_isPickingImage, child: res);
+      res = WillPopScope(
+        onWillPop: () async => !_isPickingImage,
+        child: res,
+      );
     }
     return res;
   }
