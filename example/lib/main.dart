@@ -72,18 +72,19 @@ class MyHomePage extends StatelessWidget {
                     displayCustomType: (obj) =>
                         obj is ApiImage ? obj.imageUrl : obj,
                     decoration: const InputDecoration(
-                      labelText: 'Pick Single Photo With Decoration Visible',
+                      labelText: 'Single Photo Gallery',
                     ),
                     showDecoration: true,
                     maxImages: 1,
                     previewAutoSizeWidth: true,
+                    availableImageSources: [ImageSourceOption.gallery],
                     initialValue: const [
                       'https://images.pexels.com/photos/7078045/pexels-photo-7078045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
                     ],
                   ),
                   const SizedBox(height: 15),
                   const Text(
-                    'Single Photo with no decoration, and previewAutoSizeWidth=true',
+                    'Single Photo camera',
                   ),
                   FormBuilderImagePicker(
                     name: 'singlePhoto',
@@ -95,6 +96,7 @@ class MyHomePage extends StatelessWidget {
                     showDecoration: false,
                     maxImages: 1,
                     previewAutoSizeWidth: true,
+                    availableImageSources: [ImageSourceOption.camera],
                     initialValue: const [
                       'https://images.pexels.com/photos/7078045/pexels-photo-7078045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
                     ],

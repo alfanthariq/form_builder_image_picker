@@ -4,6 +4,7 @@ import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
 import 'image_source_option.dart';
 import 'image_source_sheet.dart';
@@ -180,22 +181,43 @@ class FormBuilderImagePicker extends FormBuilderFieldDecoration<List<dynamic>> {
               try {
                 if (source == ImageSourceOption.camera ||
                     remainingImages == 1) {
-                  final pickedFile = await imagePicker.pickImage(
-                    source: source == ImageSourceOption.camera
-                        ? ImageSource.camera
-                        : ImageSource.gallery,
-                    preferredCameraDevice: preferredCameraDevice,
-                    maxHeight: maxHeight,
-                    maxWidth: maxWidth,
-                    imageQuality: imageQuality,
-                  );
-                  isPickingImage = false;
-                  if (pickedFile != null) {
-                    state.focus();
-                    field.didChange([
-                      ...value,
-                      ...[pickedFile]
-                    ]);
+                  if (source == ImageSourceOption.camera) {
+                    CameraPicker.pickFromCamera(state.context,
+                        locale: const Locale("en"),
+                        pickerConfig: CameraPickerConfig(
+                      onPickConfirmed: (p0) async {
+                        var foto = await p0.file;
+                        final pickedFile =
+                            foto != null ? XFile(foto.path) : null;
+                        isPickingImage = false;
+                        if (pickedFile != null) {
+                          state.focus();
+                          field.didChange([
+                            ...value,
+                            ...[pickedFile]
+                          ]);
+                        }
+                        if (state.mounted) {
+                          Navigator.pop(state.context);
+                        }
+                      },
+                    ));
+                  } else {
+                    final pickedFile = await imagePicker.pickImage(
+                      source: ImageSource.gallery,
+                      preferredCameraDevice: preferredCameraDevice,
+                      maxHeight: maxHeight,
+                      maxWidth: maxWidth,
+                      imageQuality: imageQuality,
+                    );
+                    isPickingImage = false;
+                    if (pickedFile != null) {
+                      state.focus();
+                      field.didChange([
+                        ...value,
+                        ...[pickedFile]
+                      ]);
+                    }
                   }
                 } else {
                   final pickedFiles = await imagePicker.pickMultiImage(
