@@ -38,6 +38,10 @@ class FormBuilderImagePicker extends FormBuilderFieldDecoration<List<dynamic>> {
   /// margins between image previews
   final EdgeInsetsGeometry? previewMargin;
 
+  /// May be supplied for a fully custom display of the image preview
+  final Widget Function(BuildContext, List<Widget> children, Widget? addButton)?
+  previewBuilder;
+
   /// placeholder image displayed when picking a new image
   final ImageProvider? placeholderImage;
 
@@ -135,6 +139,7 @@ class FormBuilderImagePicker extends FormBuilderFieldDecoration<List<dynamic>> {
     this.showDecoration = true,
     this.placeholderWidget,
     this.previewAutoSizeWidth = true,
+    this.previewBuilder,
     this.fit = BoxFit.cover,
     this.preventPop = false,
     this.displayCustomType,
