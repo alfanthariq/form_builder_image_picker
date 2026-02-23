@@ -115,6 +115,8 @@ class FormBuilderImagePicker extends FormBuilderFieldDecoration<List<dynamic>> {
 
   final WidgetBuilder? loadingWidget;
 
+  final Clip? optionsClipBehavior;
+
   FormBuilderImagePicker({
     super.key,
     required super.name,
@@ -156,6 +158,7 @@ class FormBuilderImagePicker extends FormBuilderFieldDecoration<List<dynamic>> {
     this.placeholderImage,
     this.onTap,
     this.optionsBuilder,
+    this.optionsClipBehavior,
     this.availableImageSources = const [
       ImageSourceOption.camera,
       ImageSourceOption.gallery,

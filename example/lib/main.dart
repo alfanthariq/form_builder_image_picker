@@ -56,6 +56,7 @@ class MyHomePage extends StatelessWidget {
                     previewAutoSizeWidth: true,
                     previewMargin: const EdgeInsetsDirectional.only(end: 8),
                     fit: BoxFit.cover,
+                    optionsClipBehavior: Clip.hardEdge,
                     initialValue: [
                       'https://images.pexels.com/photos/7078045/pexels-photo-7078045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
                       const Text('this is an image\nas a widget !'),
@@ -155,27 +156,27 @@ class MyHomePage extends StatelessWidget {
                     name: 'CupertinoActionSheet',
                     optionsBuilder: (cameraPicker, galleryPicker) =>
                         CupertinoActionSheet(
-                      title: const Text('Image'),
-                      message: const Text(
-                        'Pick an image from given options',
-                      ),
-                      actions: [
-                        CupertinoActionSheetAction(
-                          isDefaultAction: true,
-                          onPressed: () {
-                            cameraPicker();
-                          },
-                          child: const Text('Camera'),
+                          title: const Text('Image'),
+                          message: const Text(
+                            'Pick an image from given options',
+                          ),
+                          actions: [
+                            CupertinoActionSheetAction(
+                              isDefaultAction: true,
+                              onPressed: () {
+                                cameraPicker();
+                              },
+                              child: const Text('Camera'),
+                            ),
+                            CupertinoActionSheetAction(
+                              isDefaultAction: true,
+                              onPressed: () {
+                                galleryPicker();
+                              },
+                              child: const Text('Gallery'),
+                            ),
+                          ],
                         ),
-                        CupertinoActionSheetAction(
-                          isDefaultAction: true,
-                          onPressed: () {
-                            galleryPicker();
-                          },
-                          child: const Text('Gallery'),
-                        ),
-                      ],
-                    ),
                     onTap: (child) => showCupertinoModalPopup(
                       context: context,
                       builder: (context) => child,
@@ -184,6 +185,19 @@ class MyHomePage extends StatelessWidget {
                   FormBuilderImagePicker(
                     name: 'customPreview',
                     maxImages: null,
+                    previewBuilder: (context, images, addButton) =>
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            minHeight: 130,
+                            maxHeight: 500,
+                          ),
+                          child: GridView.extent(
+                            maxCrossAxisExtent: 130,
+                            mainAxisSpacing: 4,
+                            crossAxisSpacing: 4,
+                            children: [...images, ?addButton],
+                          ),
+                        ),
                   ),
                   ElevatedButton(
                     child: const Text('Submit'),
