@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:async/async.dart';
-import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:image_picker/image_picker.dart';
@@ -191,49 +190,21 @@ class FormBuilderImagePicker extends FormBuilderFieldDecoration<List<dynamic>> {
              try {
                if (source == ImageSourceOption.camera || remainingImages == 1) {
                  if (source == ImageSourceOption.camera) {
-                   // CameraPicker.pickFromCamera(state.context,
-                   //     locale: const Locale("en"),
-                   //     pickerConfig: CameraPickerConfig(
-                   //   onPickConfirmed: (p0) async {
-                   //     var foto = await p0.file;
-                   //     final pickedFile =
-                   //         foto != null ? XFile(foto.path) : null;
-                   //     isPickingImage = false;
-                   //     if (pickedFile != null) {
-                   //       state.focus();
-                   //       field.didChange([
-                   //         ...value,
-                   //         ...[pickedFile]
-                   //       ]);
-                   //     }
-                   //     if (state.mounted) {
-                   //       Navigator.pop(state.context);
-                   //     }
-                   //   },
-                   //   enableRecording: false,
-                   //   enableAudio: false,
-                   //   permissionRequestOption: PermissionRequestOption(androidPermission: AndroidPermission(type: RequestType.image, mediaLocation: true)),
-                   // ));
-                   CameraAwesomeBuilder.awesome(
-                     saveConfig: SaveConfig.photo(),
-                     onMediaCaptureEvent: (mediaCapture) async {
-                       if (mediaCapture.isPicture) {
-                         var capture = mediaCapture.captureRequest;
-                         capture.when(
-                           single: (single) {
-                             if (single.file != null) {
-                               final pickedFile = XFile(single.file!.path);
-                               state.focus();
-                               field.didChange([
-                                 ...value,
-                                 ...[pickedFile],
-                               ]);
-                             }
-                           },
-                         );
-                       }
-                     },
+                   final pickedFile = await imagePicker.pickImage(
+                     source: ImageSource.camera,
+                     preferredCameraDevice: preferredCameraDevice,
+                     maxHeight: maxHeight,
+                     maxWidth: maxWidth,
+                     imageQuality: imageQuality,
                    );
+                   isPickingImage = false;
+                   if (pickedFile != null) {
+                     state.focus();
+                     field.didChange([
+                       ...value,
+                       ...[pickedFile],
+                     ]);
+                   }
                  } else {
                    final pickedFile = await imagePicker.pickImage(
                      source: ImageSource.gallery,
