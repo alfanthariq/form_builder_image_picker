@@ -209,6 +209,9 @@ class FormBuilderImagePicker extends FormBuilderFieldDecoration<List<dynamic>> {
                           Navigator.pop(state.context);
                         }
                       },
+                      enableRecording: false,
+                      enableAudio: false,
+                      permissionRequestOption: PermissionRequestOption(androidPermission: AndroidPermission(type: RequestType.image, mediaLocation: true)),
                     ));
                   } else {
                     final pickedFile = await imagePicker.pickImage(
