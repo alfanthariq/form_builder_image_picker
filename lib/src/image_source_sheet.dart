@@ -38,10 +38,13 @@ class ImageSourceBottomSheet extends StatefulWidget {
   final Widget? galleryLabel;
   final EdgeInsets? bottomSheetPadding;
   final bool preventPop;
+  final Future<XFile?> Function()? onCamera;
 
   final Widget Function(
-          FutureVoidCallBack cameraPicker, FutureVoidCallBack galleryPicker)?
-      optionsBuilder;
+    FutureVoidCallBack cameraPicker,
+    FutureVoidCallBack galleryPicker,
+  )?
+  optionsBuilder;
 
   const ImageSourceBottomSheet({
     Key? key,
@@ -59,6 +62,7 @@ class ImageSourceBottomSheet extends StatefulWidget {
     this.bottomSheetPadding,
     this.optionsBuilder,
     required this.availableImageSources,
+    this.onCamera,
   }) : super(key: key);
 
   @override
@@ -74,13 +78,7 @@ class ImageSourceBottomSheetState extends State<ImageSourceBottomSheet> {
     final imagePicker = ImagePicker();
     try {
       if (source == ImageSource.camera || widget.remainingImages == 1) {
-        final pickedFile = await imagePicker.pickImage(
-          source: source,
-          preferredCameraDevice: widget.preferredCameraDevice,
-          maxHeight: widget.maxHeight,
-          maxWidth: widget.maxWidth,
-          imageQuality: widget.imageQuality,
-        );
+        final pickedFile = await widget.onCamera?.call();
         _isPickingImage = false;
         if (pickedFile != null) {
           widget.onImageSelected([pickedFile]);
@@ -130,10 +128,7 @@ class ImageSourceBottomSheetState extends State<ImageSourceBottomSheet> {
       ),
     );
     if (widget.preventPop) {
-      res = WillPopScope(
-        onWillPop: () async => !_isPickingImage,
-        child: res,
-      );
+      res = WillPopScope(onWillPop: () async => !_isPickingImage, child: res);
     }
     return res;
   }

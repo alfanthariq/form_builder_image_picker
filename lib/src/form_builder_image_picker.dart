@@ -287,6 +287,7 @@ class FormBuilderImagePicker extends FormBuilderFieldDecoration<List<dynamic>> {
                    field.didChange([...value, ...image]);
                    Navigator.pop(state.context);
                  },
+                 onCamera: onCamera,
                );
                if (onTap != null) {
                  onTap(imageSourceSheet);
@@ -357,7 +358,7 @@ class FormBuilderImagePicker extends FormBuilderFieldDecoration<List<dynamic>> {
                        child: Container(
                          margin: const EdgeInsets.all(3),
                          decoration: BoxDecoration(
-                           color: Colors.grey.withOpacity(.7),
+                           color: Colors.grey.withValues(alpha: .7),
                            shape: BoxShape.circle,
                          ),
                          alignment: Alignment.center,
