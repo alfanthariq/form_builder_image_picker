@@ -77,13 +77,13 @@ class ImageSourceBottomSheetState extends State<ImageSourceBottomSheet> {
     _isPickingImage = true;
     final imagePicker = ImagePicker();
     try {
-      if (source == ImageSource.camera || widget.remainingImages == 1) {
+      if (source == ImageSource.camera && widget.remainingImages == 1) {
         final pickedFile = await widget.onCamera?.call();
         _isPickingImage = false;
         if (pickedFile != null) {
           widget.onImageSelected([pickedFile]);
         }
-      } else if (source == ImageSource.gallery || widget.remainingImages == 1) {
+      } else if (source == ImageSource.gallery && widget.remainingImages == 1) {
         final pickedFile = await imagePicker.pickImage(
           source: source,
           preferredCameraDevice: widget.preferredCameraDevice,
