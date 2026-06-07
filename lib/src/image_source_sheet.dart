@@ -83,6 +83,18 @@ class ImageSourceBottomSheetState extends State<ImageSourceBottomSheet> {
         if (pickedFile != null) {
           widget.onImageSelected([pickedFile]);
         }
+      } else if (source == ImageSource.gallery || widget.remainingImages == 1) {
+        final pickedFile = await imagePicker.pickImage(
+          source: source,
+          preferredCameraDevice: widget.preferredCameraDevice,
+          maxHeight: widget.maxHeight,
+          maxWidth: widget.maxWidth,
+          imageQuality: widget.imageQuality,
+        );
+        _isPickingImage = false;
+        if (pickedFile != null) {
+          widget.onImageSelected([pickedFile]);
+        }
       } else {
         final pickedFiles = await imagePicker.pickMultiImage(
           maxHeight: widget.maxHeight,
