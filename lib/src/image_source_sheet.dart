@@ -39,6 +39,7 @@ class ImageSourceBottomSheet extends StatefulWidget {
   final EdgeInsets? bottomSheetPadding;
   final bool preventPop;
   final Future<XFile?> Function()? onCamera;
+  final void Function()? onBeforePickImage;
 
   final Widget Function(
     FutureVoidCallBack cameraPicker,
@@ -63,6 +64,7 @@ class ImageSourceBottomSheet extends StatefulWidget {
     this.optionsBuilder,
     required this.availableImageSources,
     this.onCamera,
+    this.onBeforePickImage,
   }) : super(key: key);
 
   @override
@@ -75,6 +77,7 @@ class ImageSourceBottomSheetState extends State<ImageSourceBottomSheet> {
   Future<void> _onPickImage(ImageSource source) async {
     if (_isPickingImage) return;
     _isPickingImage = true;
+    widget.onBeforePickImage?.call();
     final imagePicker = ImagePicker();
     try {
       if (source == ImageSource.camera && widget.remainingImages == 1) {

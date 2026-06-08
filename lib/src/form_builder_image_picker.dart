@@ -122,7 +122,7 @@ class FormBuilderImagePicker extends FormBuilderFieldDecoration<List<dynamic>> {
 
   final Clip? optionsClipBehavior;
 
-  final void Function()? onBeforeCameraOpen;
+  final void Function()? onBeforePickImage;
   final Future<XFile?> Function()? onCamera;
 
   FormBuilderImagePicker({
@@ -172,7 +172,7 @@ class FormBuilderImagePicker extends FormBuilderFieldDecoration<List<dynamic>> {
       ImageSourceOption.camera,
       ImageSourceOption.gallery,
     ],
-    this.onBeforeCameraOpen,
+    this.onBeforePickImage,
     this.onCamera,
   }) : assert(maxImages == null || maxImages >= 0),
        super(
@@ -191,11 +191,11 @@ class FormBuilderImagePicker extends FormBuilderFieldDecoration<List<dynamic>> {
            }) async {
              if (isPickingImage) return;
              isPickingImage = true;
+             onBeforePickImage?.call();
              final imagePicker = ImagePicker();
              try {
                if (source == ImageSourceOption.camera || remainingImages == 1) {
                  if (source == ImageSourceOption.camera) {
-                   onBeforeCameraOpen?.call();
                    if (onCamera != null) {
                      final pickedFile = await onCamera.call();
                      isPickingImage = false;
