@@ -196,14 +196,32 @@ class FormBuilderImagePicker extends FormBuilderFieldDecoration<List<dynamic>> {
                if (source == ImageSourceOption.camera || remainingImages == 1) {
                  if (source == ImageSourceOption.camera) {
                    onBeforeCameraOpen?.call();
-                   final pickedFile = await onCamera?.call();
-                   isPickingImage = false;
-                   if (pickedFile != null) {
-                     state.focus();
-                     field.didChange([
-                       ...value,
-                       ...[pickedFile],
-                     ]);
+                   if (onCamera != null) {
+                     final pickedFile = await onCamera.call();
+                     isPickingImage = false;
+                     if (pickedFile != null) {
+                       state.focus();
+                       field.didChange([
+                         ...value,
+                         ...[pickedFile],
+                       ]);
+                     }
+                   } else {
+                     final pickedFile = await imagePicker.pickImage(
+                       source: ImageSource.camera,
+                       preferredCameraDevice: preferredCameraDevice,
+                       maxHeight: maxHeight,
+                       maxWidth: maxWidth,
+                       imageQuality: imageQuality,
+                     );
+                     isPickingImage = false;
+                     if (pickedFile != null) {
+                       state.focus();
+                       field.didChange([
+                         ...value,
+                         ...[pickedFile],
+                       ]);
+                     }
                    }
                  } else {
                    final pickedFile = await imagePicker.pickImage(
