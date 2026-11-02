@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 
+import 'package:material_ui/material_ui.dart' as mui;
+
 Future<void> main() async {
   runApp(const MyApp());
 }
@@ -51,7 +53,9 @@ class MyHomePage extends StatelessWidget {
                     name: 'photos',
                     displayCustomType: (obj) =>
                         obj is ApiImage ? obj.imageUrl : obj,
-                    decoration: const InputDecoration(labelText: 'Pick Photos'),
+                    decoration: const mui.InputDecoration(
+                      labelText: 'Pick Photos',
+                    ),
                     maxImages: 5,
                     previewAutoSizeWidth: true,
                     previewMargin: const EdgeInsetsDirectional.only(end: 8),
@@ -72,7 +76,7 @@ class MyHomePage extends StatelessWidget {
                     name: 'singlePhotoWithDecoration',
                     displayCustomType: (obj) =>
                         obj is ApiImage ? obj.imageUrl : obj,
-                    decoration: const InputDecoration(
+                    decoration: const mui.InputDecoration(
                       labelText: 'Single Photo Gallery',
                     ),
                     showDecoration: true,
@@ -84,9 +88,7 @@ class MyHomePage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 15),
-                  const Text(
-                    'Single Photo camera',
-                  ),
+                  const Text('Single Photo camera'),
                   FormBuilderImagePicker(
                     name: 'singlePhoto',
                     displayCustomType: (obj) =>
@@ -110,7 +112,9 @@ class MyHomePage extends StatelessWidget {
                     name: 'singleAvatarPhoto',
                     displayCustomType: (obj) =>
                         obj is ApiImage ? obj.imageUrl : obj,
-                    decoration: const InputDecoration(labelText: 'Pick Photos'),
+                    decoration: const mui.InputDecoration(
+                      labelText: 'Pick Photos',
+                    ),
                     transformImageWidget: (context, displayImage) => Card(
                       shape: const CircleBorder(),
                       clipBehavior: Clip.antiAlias,
@@ -126,7 +130,9 @@ class MyHomePage extends StatelessWidget {
                   const SizedBox(height: 15),
                   FormBuilderImagePicker(
                     name: 'fieldCustomization',
-                    decoration: const InputDecoration(labelText: 'Pick Photos'),
+                    decoration: const mui.InputDecoration(
+                      labelText: 'Pick Photos',
+                    ),
                     previewAutoSizeWidth: true,
                     fit: BoxFit.cover,
                     backgroundColor: Colors.black54,
@@ -136,7 +142,7 @@ class MyHomePage extends StatelessWidget {
                   const SizedBox(height: 15),
                   FormBuilderImagePicker(
                     name: 'onlyCamera',
-                    decoration: const InputDecoration(
+                    decoration: const mui.InputDecoration(
                       labelText: 'Pick Photos (only from camera)',
                     ),
                     availableImageSources: const [ImageSourceOption.camera],
@@ -144,13 +150,13 @@ class MyHomePage extends StatelessWidget {
                   const SizedBox(height: 15),
                   FormBuilderImagePicker(
                     name: 'onlyGallery',
-                    decoration: const InputDecoration(
+                    decoration: const mui.InputDecoration(
                       labelText: 'Pick Photos (only from gallery)',
                     ),
                     availableImageSources: const [ImageSourceOption.gallery],
                   ),
                   FormBuilderImagePicker(
-                    decoration: const InputDecoration(
+                    decoration: const mui.InputDecoration(
                       labelText: 'Pick Photos (with custom view)',
                     ),
                     name: 'CupertinoActionSheet',
